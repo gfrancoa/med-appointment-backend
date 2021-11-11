@@ -3,7 +3,7 @@ const ctrlAppointment = {},
 
   //PREGUNTAS:  
   //como hacer para que los datos que yo mande en el body sean los que se actualicen
-  //y los que no se queden igual?
+  //y los que no se queden igual? R/ Automaticamente lo que yo mande es lo que se actualiza
   //como traerme el nombre del paciente a traves de la referencia (join)
   //por que la hora no cuadra con la hora que se guardo?
   //cuando se hace la referencia por index = true al hacer una referencia
@@ -41,6 +41,19 @@ ctrlAppointment.list = async (req, res) => {
 ctrlAppointment.cancel = async (req, res) => {
   const { _id, isCompleted } = req.body;
   await Appointment.findOneAndUpdate({ _id: _id }, { isCompleted: isCompleted });
+  res.json({ status: true });
+};
+
+ctrlAppointment.update = async (req, res) => {
+  const { _id, isCompleted, date, time, patient } = req.body;
+  await Appointment.findOneAndUpdate(
+    { _id: _id },
+    { date: date,
+      isCompleted: isCompleted,
+      time: time,
+      patient: patient 
+    }
+  );
   res.json({ status: true });
 };
 
